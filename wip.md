@@ -1,40 +1,40 @@
-Tasks/WIP/Ideas:
+# Work in progress/Tasks/Ideas
 
-Add project to travis CI
+1. Add project to travis CI
 
-Add project to distribution repo e.g bintray or other
+2. Add project to distribution repo e.g bintray or other
 
-Decide on REST server - investigate options, i.e jetty?  Or go low level - e.g Netty or HTTP Servlet
+3. Decide on REST server - investigate options, i.e jetty?  Or go low level - e.g Netty or HTTP Servlet
     - avoid heavyweight dependency tree
     - preference for non blocking
     - mock requests to be serailized on client, then sent to server for processing
         - what serialisation framework?  avro?
     - server handles request matching and responses
 
-Implement server side request processing
+4. Implement server side request processing
 
-Implement server side request matching 
+5. Implement server side request matching 
 
-API to request server state
+6. API to request server state
     - request history
     - unmatched requests
     - current active mocks
     - server configuration
 
-Allow some configurations to be global instead of per endpoint - i.e Jittered/delayed response
+7. Allow some configurations to be global instead of per endpoint - i.e Jittered/delayed response
 
-Log unmatched requests as errors or throws exception
+8. Log unmatched requests as errors or throws exception
 
 
-Matching url based on lambda, regex or string
-```
+9. Matching url based on lambda, regex or string
+```kotlin
     url("/users")
     url(Regex("(.*)"))
     url(url -> { url.beginWith("/users/silver") })
 ```
 
-Matching request body based on string, lambda, regex, json (for PUT, POST, DELETE only)
-```
+10. Matching request body based on string, lambda, regex, json (for PUT, POST, DELETE only)
+```kotlin
     put {
         requestBody(str -> str.contains("foo"))
         requestBody(Regex("(.*)")
@@ -47,8 +47,8 @@ Matching request body based on string, lambda, regex, json (for PUT, POST, DELET
     }
 ```
 
-Jittered/delayed responses
-```
+11. Jittered/delayed responses
+```kotlin
     get {
         response {
             delay(stategy = RandomDistrubution(min = 1ms, max = 200ms))

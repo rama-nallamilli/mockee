@@ -1,9 +1,9 @@
 # MocKee
 
-A HTTP layer mocking framework for Kotlin, inspired by Wiremock.
+A HTTP layer mocking framework for Kotlin, inspired by Wiremock.  This library is currently a work in progress.
 
--- a Kotlin first fluent DSL
--- low dependency framework
+- a Kotlin fluent DSL
+- low dependency framework
 
 ## Mocking a GET request
 
@@ -43,3 +43,5 @@ mock {
     clearMock(requests = myMockedRequest, server = mockServer)
 
 ```
+## Work in progress
+See [work in progress](wip.md)
