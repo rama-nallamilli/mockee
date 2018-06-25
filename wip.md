@@ -1,4 +1,4 @@
-Tasks/WIP/Ideas:
+# Work in progress/Tasks/Ideas
 
 1. Add project to travis CI
 
