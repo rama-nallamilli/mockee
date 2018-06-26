@@ -3,6 +3,7 @@ package org.mockee.http.validator
 import org.mockee.func.Either
 import org.mockee.func.Left
 import org.mockee.func.Right
+import org.mockee.func.flatMap
 import org.mockee.http.dsl.DslData
 import org.mockee.http.model.MockRequest
 
