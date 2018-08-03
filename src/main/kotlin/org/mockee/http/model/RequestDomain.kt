@@ -15,4 +15,3 @@ data class MockRequest(val method: RequestMethod,
                        val requestHeaders: Map<String, String>,
                        val responseHeaders: Map<String, String>,
                        val responseBody: String?)
-
