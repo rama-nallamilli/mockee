@@ -1,11 +1,6 @@
 package org.mockee.http.model
 
 import org.mockee.http.dsl.StatusCode
-import java.io.ByteArrayOutputStream
-import java.io.ObjectInputStream
-import java.io.ObjectOutputStream
-import java.io.Serializable
-import java.util.*
 
 sealed class RequestMethod {
     object GET : RequestMethod()
