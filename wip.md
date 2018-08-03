@@ -61,3 +61,5 @@
 ```
 
 12. Add DSL markers - see https://kotlinlang.org/docs/reference/type-safe-builders.html#scope-control-dslmarker-since-11
+
+13. Allow removal of mocks - either individual or clear all.  introduce a UUID
