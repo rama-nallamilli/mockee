@@ -1,8 +1,8 @@
 package org.mockee.server
 
-import org.mockee.http.dsl.StatusCode
 import org.mockee.http.model.MockRequest
 import org.mockee.http.model.RequestMethod
+import org.mockee.http.model.StatusCode
 import java.time.LocalDateTime
 import java.util.*
 
@@ -10,7 +10,7 @@ data class StoredRequest(val uuid: UUID,
                          val createdDateTime: LocalDateTime,
                          val method: RequestMethod,
                          val url: String,
-                         val status: StatusCode,
+                         val status: StatusCode, //TODO fix this, should be seperate model
                          val requestHeaders: Map<String, String>,
                          val responseHeaders: Map<String, String>,
                          val responseBody: String?)

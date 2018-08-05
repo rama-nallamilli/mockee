@@ -2,9 +2,9 @@ package org.mockee.server
 
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
-import org.mockee.http.dsl.StatusCode
 import org.mockee.http.model.MockRequest
 import org.mockee.http.model.RequestMethod
+import org.mockee.http.model.StatusCode
 import java.time.LocalDateTime
 import java.util.*
 

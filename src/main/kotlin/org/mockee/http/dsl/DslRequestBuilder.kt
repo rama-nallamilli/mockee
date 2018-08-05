@@ -3,6 +3,7 @@ package org.mockee.http.dsl
 import org.mockee.func.Either
 import org.mockee.http.model.MockRequest
 import org.mockee.http.model.RequestMethod
+import org.mockee.http.model.StatusCode
 import org.mockee.http.validator.DslDataValidator
 import org.mockee.http.validator.InvalidMockRequest
 
@@ -44,9 +45,6 @@ abstract class MockedDslRequestBuilderImpl : MockedDslRequestBuilder {
         return DslDataValidator.validateRequest(dslData)
     }
 }
-
-data class StatusCode(val code: Int)
-
 
 class ResponseDsl(private val data: DslData) {
 
