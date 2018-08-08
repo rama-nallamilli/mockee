@@ -2,8 +2,9 @@ package org.mockee.http.dsl
 
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
-import org.mockee.http.model.RequestMethod
 import org.mockee.http.model.MockRequest
+import org.mockee.http.model.RequestMethod
+import org.mockee.http.model.StatusCode
 import java.util.*
 
 class DslDataValidatorSpec : WordSpec({

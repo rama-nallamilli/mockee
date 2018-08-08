@@ -1,9 +1,12 @@
 package org.mockee.serialisation
 
+import io.kotlintest.matchers.types.shouldBeInstanceOf
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
+import org.mockee.http.model.MockRequest
+import org.mockee.http.model.RequestMethod
+import org.mockee.http.model.StatusCode
 import java.io.Serializable
-
 
 class SerialisationSpec : WordSpec({
     "encodeToString and decodeToObject" should {
@@ -39,6 +42,28 @@ class SerialisationSpec : WordSpec({
             val decodedObj = decodeToObject<Bar>(encodedStr)
             decodedObj.foo shouldBe "hello"
             decodedObj.fn("10") shouldBe 20
+        }
+
+        "write/read a MockRequest" {
+            val mock = MockRequest(
+                    method = RequestMethod.GET,
+                    url = "/my-app/users",
+                    status = StatusCode(200),
+                    requestHeaders = mapOf("X-Session-Id" to "1234"),
+                    responseHeaders = mapOf("Content-Type" to "application/json"),
+                    responseBody = """ { "status" : "OK" } """
+            )
+
+            val encoded = encodeToString(mock)
+
+            val decoded = decodeToObject<MockRequest>(encoded)
+            decoded.method.shouldBeInstanceOf<RequestMethod.GET>()
+            decoded.url shouldBe "/my-app/users"
+            decoded.status shouldBe StatusCode(200)
+            decoded.requestHeaders shouldBe mapOf("X-Session-Id" to "1234")
+            decoded.responseHeaders shouldBe mapOf("Content-Type" to "application/json")
+            decoded.responseBody shouldBe """ { "status" : "OK" } """
+
         }
     }
 })

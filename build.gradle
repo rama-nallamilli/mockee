@@ -27,8 +27,10 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile 'io.javalin:javalin:1.7.0'
     compile "ch.qos.logback:logback-classic:1.2.1"
     testCompile 'io.kotlintest:kotlintest-runner-junit5:3.1.6'
+    testCompile 'khttp:khttp:0.1.0'
 }
 
 test {

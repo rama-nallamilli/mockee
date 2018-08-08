@@ -2,9 +2,9 @@ package org.mockee.server
 
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
-import org.mockee.http.dsl.StatusCode
 import org.mockee.http.model.MockRequest
 import org.mockee.http.model.RequestMethod
+import org.mockee.http.model.StatusCode
 import java.time.LocalDateTime
 import java.util.*
 
@@ -36,10 +36,11 @@ class BasicRequestStoreSpec : WordSpec({
                     responseBody = request.responseBody)
 
             dispatcher.getRequestByUrlAndHeaders(
-                    method = RequestMethod.GET,
+                    method = "GET",
                     url = "/my-app/users",
-                    status = 200,
-                    headers = mapOf("X-App-Id" to "my-app", "X-Trace-Id" to "abc")) shouldBe expected
+                    headers = mapOf(
+                            "X-App-Id" to "my-app",
+                            "X-Trace-Id" to "abc")) shouldBe expected
         }
 
         "return empty when no matches" {
@@ -57,13 +58,9 @@ class BasicRequestStoreSpec : WordSpec({
 
             dispatcher.saveRequest(request)
 
-            dispatcher.getRequestByUrlAndHeaders(method = RequestMethod.GET,
+            dispatcher.getRequestByUrlAndHeaders(method = "GET",
                     url = "/my-app/users",
-                    status = 200,
                     headers = emptyMap()) shouldBe null
         }
-
-        //todo handle 2 matched requests, return latest
-
     }
 })

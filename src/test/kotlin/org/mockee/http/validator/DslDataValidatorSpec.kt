@@ -5,9 +5,9 @@ import io.kotlintest.specs.WordSpec
 import org.mockee.func.Left
 import org.mockee.func.Right
 import org.mockee.http.dsl.DslData
-import org.mockee.http.dsl.StatusCode
 import org.mockee.http.model.MockRequest
 import org.mockee.http.model.RequestMethod
+import org.mockee.http.model.StatusCode
 
 class DslDataValidatorSpec : WordSpec({
     "validate" should {
