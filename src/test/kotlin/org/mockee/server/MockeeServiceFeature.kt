@@ -15,7 +15,7 @@ class MockeeServiceFeature : FeatureSpec({
     val url = "http://localhost:8000/"
 
     feature("Mockee Service") {
-        scenario("should accept mock requests") {
+        scenario("should accept and resolve mock requests") {
 
             val mockRequest = mock {
                 get {
@@ -30,16 +30,18 @@ class MockeeServiceFeature : FeatureSpec({
                 }
             }.request.right()
 
-            val body = encodeToString(mockRequest)
-            val response = khttp.post(url = url + "_admin_/_mock", data = body)
-            response.statusCode shouldBe 200
+            //TODO: Can we just encode lambdas rather than whole data class, i.e use JSON for data class and base64 encoding for lambda?
+            val configureMockResponse = khttp.post(url = url + "_admin_/_mock", data = encodeToString(mockRequest))
+            configureMockResponse.statusCode shouldBe 200
 
-
-            val response2 = khttp.get(
+            val getUsersResponse = khttp.get(
                     url = url + "/my-app/users",
-                    headers = mapOf(Pair("X-App-Id", "my-app")))
+                    headers = mapOf("X-App-Id" to "my-app"))
 
-            println("rama${response2.statusCode}")
+            getUsersResponse.content shouldBe "Pow! Wow!".toByteArray()
+            getUsersResponse.statusCode shouldBe 200
+            getUsersResponse.headers shouldBe mapOf("X-App-Id" to "my-app")
+
         }
     }
 

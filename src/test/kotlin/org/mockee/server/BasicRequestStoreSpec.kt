@@ -38,7 +38,9 @@ class BasicRequestStoreSpec : WordSpec({
             dispatcher.getRequestByUrlAndHeaders(
                     method = "GET",
                     url = "/my-app/users",
-                    headers = mapOf("X-App-Id" to "my-app", "X-Trace-Id" to "abc")) shouldBe expected
+                    headers = mapOf(
+                            "X-App-Id" to "my-app",
+                            "X-Trace-Id" to "abc")) shouldBe expected
         }
 
         "return empty when no matches" {
@@ -60,8 +62,5 @@ class BasicRequestStoreSpec : WordSpec({
                     url = "/my-app/users",
                     headers = emptyMap()) shouldBe null
         }
-
-        //todo handle 2 matched requests, return latest
-
     }
 })

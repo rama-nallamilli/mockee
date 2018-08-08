@@ -3,7 +3,7 @@ package org.mockee.server
 import org.mockee.http.model.MockRequest
 import org.mockee.http.model.RequestMethod
 import org.mockee.http.model.StatusCode
-import java.net.URL
+import java.net.URI
 import java.time.LocalDateTime
 import java.util.*
 
@@ -11,7 +11,7 @@ data class StoredRequest(val uuid: UUID,
                          val createdDateTime: LocalDateTime,
                          val method: RequestMethod,
                          val url: String,
-                         val status: StatusCode, //TODO fix this, should be separate model
+                         val status: StatusCode, //TODO should be abstracted away from the Request model
                          val requestHeaders: Map<String, String>,
                          val responseHeaders: Map<String, String>,
                          val responseBody: String?)
@@ -52,22 +52,20 @@ class BasicRequestStore(private val genUUID: () -> UUID,
     override fun getRequestByUrlAndHeaders(method: String,
                                            url: String,
                                            headers: Map<String, String>): StoredRequest? {
-        val santizedPath= santizeUrlPath(url)
-        val key = RequestKey(method, santizedPath)
+        val sanitizedPath = sanitizeUrlPath(url)
+        val key = RequestKey(method, sanitizedPath)
         val requestsByKey = requests[key]
 
         val matching = requestsByKey?.filter { f ->
+            //todo: header check should be contains all? not equal as client can add extra headers such as Accept, Host etc
             f.url == url && f.requestHeaders == headers
         }
 
         return matching?.lastOrNull()
     }
 
-    private fun santizeUrlPath(url: String): String {
-        //todo
-        val result = URL(url).path
-        println("santizeUrlPath=$result")
-        return result
+    private fun sanitizeUrlPath(url: String): String {
+        return URI(url).normalize().path
     }
 }
 

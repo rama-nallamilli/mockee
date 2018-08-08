@@ -7,15 +7,11 @@ import org.mockee.serialisation.DecodeObjectError
 import org.mockee.serialisation.decodeToObject
 
 class MockeeService(private val port: Int,
-                    requestStore: RequestStore) { //todo Refactor request store to controller
+                    requestStore: RequestStore) {
 
     private val storeMockRequestHandler: (Context) -> Unit = { ctx: Context ->
         try {
-            //todo: add a test for handlers
-            val body = ctx.body()
-            println(body)
             val request = decodeToObject<MockRequest>(ctx.body())
-            println(request)
             requestStore.saveRequest(request)
 
             val response = """
