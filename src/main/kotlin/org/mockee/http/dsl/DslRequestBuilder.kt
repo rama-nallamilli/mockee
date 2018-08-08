@@ -28,7 +28,7 @@ abstract class MockedDslRequestBuilderImpl : MockedDslRequestBuilder {
     }
 
     fun path(url: String) {
-        dslData.path = url
+        dslData.path = url //todo validate path, all start with /
     }
 
     fun header(key: String, value: String) {

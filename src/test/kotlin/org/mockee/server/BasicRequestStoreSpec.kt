@@ -36,9 +36,8 @@ class BasicRequestStoreSpec : WordSpec({
                     responseBody = request.responseBody)
 
             dispatcher.getRequestByUrlAndHeaders(
-                    method = RequestMethod.GET,
+                    method = "GET",
                     url = "/my-app/users",
-                    status = 200,
                     headers = mapOf("X-App-Id" to "my-app", "X-Trace-Id" to "abc")) shouldBe expected
         }
 
@@ -57,9 +56,8 @@ class BasicRequestStoreSpec : WordSpec({
 
             dispatcher.saveRequest(request)
 
-            dispatcher.getRequestByUrlAndHeaders(method = RequestMethod.GET,
+            dispatcher.getRequestByUrlAndHeaders(method = "GET",
                     url = "/my-app/users",
-                    status = 200,
                     headers = emptyMap()) shouldBe null
         }
 
