@@ -1,10 +1,9 @@
 package org.mockee.server
 
 import io.javalin.Javalin
-import io.kotlintest.Description
-import io.kotlintest.Spec
+import io.kotlintest.*
 import io.kotlintest.extensions.TestListener
-import io.kotlintest.shouldBe
+import io.kotlintest.matchers.maps.mapcontain
 import io.kotlintest.specs.FeatureSpec
 import org.mockee.http.dsl.mock
 import org.mockee.serialisation.encodeToString
@@ -23,7 +22,8 @@ class MockeeServiceFeature : FeatureSpec({
                     header(key = "X-App-Id", value = "my-app")
 
                     response {
-                        header("Content-Type", "text/plain")
+                        header("X-Test", "123")
+                        header("X-Trace", "ABCD")
                         status(200)
                         stringBody("Pow! Wow!")
                     }
@@ -38,10 +38,10 @@ class MockeeServiceFeature : FeatureSpec({
                     url = url + "/my-app/users",
                     headers = mapOf("X-App-Id" to "my-app"))
 
-            getUsersResponse.content shouldBe "Pow! Wow!".toByteArray()
             getUsersResponse.statusCode shouldBe 200
-            getUsersResponse.headers shouldBe mapOf("X-App-Id" to "my-app")
-
+            getUsersResponse.text shouldBe "Pow! Wow!"
+            getUsersResponse.headers should mapcontain("X-Test", "123")
+            getUsersResponse.headers should mapcontain("X-Trace", "ABCD")
         }
     }
 
@@ -65,7 +65,6 @@ object MockeeApp : TestListener {
             super.beforeSpec(description, spec)
         }
     }
-
 
     override fun afterSpec(description: Description, spec: Spec) {
         try {

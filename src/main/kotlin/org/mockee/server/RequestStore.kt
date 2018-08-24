@@ -56,9 +56,9 @@ class BasicRequestStore(private val genUUID: () -> UUID,
         val key = RequestKey(method, sanitizedPath)
         val requestsByKey = requests[key]
 
+        val sanitisedUrl = sanitizeUrlPath(url)
         val matching = requestsByKey?.filter { f ->
-            //todo: header check should be contains all? not equal as client can add extra headers such as Accept, Host etc
-            f.url == url && f.requestHeaders == headers
+            f.url == sanitisedUrl && f.requestHeaders.all { headers.containsKey(it.key) }
         }
 
         return matching?.lastOrNull()
