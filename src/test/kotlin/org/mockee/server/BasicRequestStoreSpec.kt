@@ -30,7 +30,7 @@ class BasicRequestStoreSpec : WordSpec({
                     createdDateTime = dateTime,
                     method = request.method,
                     url = request.url,
-                    status = request.status,
+                    status = request.status.code,
                     requestHeaders = request.requestHeaders,
                     responseHeaders = request.responseHeaders,
                     responseBody = request.responseBody)

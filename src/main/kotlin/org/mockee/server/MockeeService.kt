@@ -38,7 +38,7 @@ class MockeeService(private val port: Int,
         )
 
         val headers = storedRequest?.responseHeaders ?: emptyMap()
-        val statusCode = storedRequest?.status?.code ?: 404
+        val statusCode = storedRequest?.status ?: 404
         val body = storedRequest?.responseBody
 
         headers.forEach { k, v ->  ctx.header(k, v) }

@@ -2,7 +2,6 @@ package org.mockee.server
 
 import org.mockee.http.model.MockRequest
 import org.mockee.http.model.RequestMethod
-import org.mockee.http.model.StatusCode
 import java.net.URI
 import java.time.LocalDateTime
 import java.util.*
@@ -11,7 +10,7 @@ data class StoredRequest(val uuid: UUID,
                          val createdDateTime: LocalDateTime,
                          val method: RequestMethod,
                          val url: String,
-                         val status: StatusCode, //TODO should be abstracted away from the Request model
+                         val status: Int,
                          val requestHeaders: Map<String, String>,
                          val responseHeaders: Map<String, String>,
                          val responseBody: String?)
@@ -40,7 +39,7 @@ class BasicRequestStore(private val genUUID: () -> UUID,
                 createdDateTime = genDateTime(),
                 method = request.method,
                 url = request.url,
-                status = request.status,
+                status = request.status.code,
                 requestHeaders = request.requestHeaders,
                 responseHeaders = request.responseHeaders,
                 responseBody = request.responseBody)
