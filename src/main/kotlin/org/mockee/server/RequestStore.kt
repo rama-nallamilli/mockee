@@ -1,14 +1,13 @@
 package org.mockee.server
 
 import org.mockee.http.model.MockRequest
-import org.mockee.http.model.RequestMethod
 import java.net.URI
 import java.time.LocalDateTime
 import java.util.*
 
 data class StoredRequest(val uuid: UUID,
                          val createdDateTime: LocalDateTime,
-                         val method: RequestMethod,
+                         val method: String,
                          val url: String,
                          val status: Int,
                          val requestHeaders: Map<String, String>,
@@ -32,7 +31,7 @@ class BasicRequestStore(private val genUUID: () -> UUID,
     private val requests = mutableMapOf<RequestKey, MutableList<StoredRequest>>()
 
     override fun saveRequest(request: MockRequest) {
-        val key = RequestKey(request.method.javaClass.simpleName, request.url)
+        val key = RequestKey(request.method, request.url)
         val requestsByKey = requests.getOrPut(key = key, defaultValue = { mutableListOf() })
 
         val toStore = StoredRequest(uuid = genUUID(),

@@ -17,7 +17,7 @@ class BasicRequestStoreSpec : WordSpec({
 
             val dispatcher = BasicRequestStore({ uuid }, { dateTime })
 
-            val request = MockRequest(method = RequestMethod.GET,
+            val request = MockRequest(method = "GET",
                     url = "/my-app/users",
                     status = StatusCode(200),
                     requestHeaders = mapOf("X-App-Id" to "my-app", "X-Trace-Id" to "abc"),
@@ -49,7 +49,7 @@ class BasicRequestStoreSpec : WordSpec({
 
             val dispatcher = BasicRequestStore({ uuid }, { dateTime })
 
-            val request = MockRequest(method = RequestMethod.GET,
+            val request = MockRequest(method = "GET",
                     url = "/my-app/users",
                     status = StatusCode(200),
                     requestHeaders = mapOf("X-App-Id" to "my-app", "X-Trace-Id" to "abc"),

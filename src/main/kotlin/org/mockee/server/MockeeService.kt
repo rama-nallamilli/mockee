@@ -4,14 +4,14 @@ import io.javalin.Context
 import io.javalin.Javalin
 import org.mockee.http.model.MockRequest
 import org.mockee.serialisation.DecodeObjectError
-import org.mockee.serialisation.decodeToObject
 
 class MockeeService(private val port: Int,
                     requestStore: RequestStore) {
 
     private val storeMockRequestHandler: (Context) -> Unit = { ctx: Context ->
         try {
-            val request = decodeToObject<MockRequest>(ctx.body())
+
+            val request = ctx.bodyAsClass(MockRequest::class.java)
             requestStore.saveRequest(request)
 
             val response = """

@@ -1,12 +1,15 @@
 package org.mockee.server
 
 import io.javalin.Javalin
-import io.kotlintest.*
+import io.kotlintest.Description
+import io.kotlintest.Spec
 import io.kotlintest.extensions.TestListener
 import io.kotlintest.matchers.maps.mapcontain
+import io.kotlintest.should
+import io.kotlintest.shouldBe
 import io.kotlintest.specs.FeatureSpec
+import org.json.JSONObject
 import org.mockee.http.dsl.mock
-import org.mockee.serialisation.encodeToString
 import java.time.LocalDateTime
 import java.util.*
 
@@ -30,8 +33,10 @@ class MockeeServiceFeature : FeatureSpec({
                 }
             }.request.right()
 
-            //TODO: Can we just encode lambdas rather than whole data class, i.e use JSON for data class and base64 encoding for lambda?
-            val configureMockResponse = khttp.post(url = url + "_admin_/_mock", data = encodeToString(mockRequest))
+            val configureMockResponse = khttp.post(
+                    url = url + "_admin_/_mock",
+                    data = JSONObject(mockRequest),
+                    headers = mapOf("Content-Type" to "application/json"))
             configureMockResponse.statusCode shouldBe 200
 
             val getUsersResponse = khttp.get(

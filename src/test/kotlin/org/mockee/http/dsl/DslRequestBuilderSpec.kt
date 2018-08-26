@@ -3,7 +3,6 @@ package org.mockee.http.dsl
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
 import org.mockee.http.model.MockRequest
-import org.mockee.http.model.RequestMethod
 import org.mockee.http.model.StatusCode
 import java.util.*
 
@@ -27,7 +26,7 @@ class DslDataValidatorSpec : WordSpec({
                 }
             }.request.right()
 
-            mockRequest shouldBe MockRequest(method = RequestMethod.GET,
+            mockRequest shouldBe MockRequest(method = "GET",
                     url = "/my-app/users",
                     status = StatusCode(200),
                     requestHeaders = mapOf("X-App-Id" to "my-app", "X-Trace-Id" to traceId),

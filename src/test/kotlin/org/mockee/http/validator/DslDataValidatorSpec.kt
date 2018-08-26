@@ -21,7 +21,7 @@ class DslDataValidatorSpec : WordSpec({
             request.responseHeaders.put("Content-Type", "application/json")
 
             val expected = Right<InvalidMockRequest, MockRequest>(MockRequest(
-                    method = RequestMethod.GET,
+                    method = "GET",
                     url = "/my-app/users",
                     status = StatusCode(200),
                     requestHeaders = mapOf("X-Session-Id" to "1234"),

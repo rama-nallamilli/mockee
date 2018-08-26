@@ -24,7 +24,7 @@ object DslDataValidator {
         return validatedPath.flatMap { path ->
             validatedStatusCode.flatMap { statusCode ->
                 Right<InvalidMockRequest, MockRequest>(
-                        MockRequest(method = data.requestMethod,
+                        MockRequest(method = data.requestMethod.javaClass.simpleName,
                                 status = statusCode,
                                 url = path,
                                 requestHeaders = data.requestHeaders,
