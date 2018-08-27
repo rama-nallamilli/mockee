@@ -1,5 +1,5 @@
 # MocKee
-
+[![Build Status](https://travis-ci.org/rama-nallamilli/mockee.svg?branch=master)](https://travis-ci.org/rama-nallamilli/mockee)
 A HTTP layer mocking framework for Kotlin, inspired by Wiremock.  This library is currently a work in progress.
 
 - a Kotlin fluent DSL
