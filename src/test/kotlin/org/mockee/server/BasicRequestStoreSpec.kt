@@ -3,7 +3,6 @@ package org.mockee.server
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.WordSpec
 import org.mockee.http.model.MockRequest
-import org.mockee.http.model.RequestMethod
 import org.mockee.http.model.StatusCode
 import java.time.LocalDateTime
 import java.util.*
@@ -17,23 +16,30 @@ class BasicRequestStoreSpec : WordSpec({
 
             val dispatcher = BasicRequestStore({ uuid }, { dateTime })
 
-            val request = MockRequest(method = "GET",
+            val request1 = MockRequest(method = "GET",
                     url = "/my-app/users",
                     status = StatusCode(200),
                     requestHeaders = mapOf("X-App-Id" to "my-app", "X-Trace-Id" to "abc"),
                     responseHeaders = mapOf("Content-Type" to "text/plain"),
-                    responseBody = "Pow! Wow!")
+                    responseBody = "Pow! Wow!",
+                    requestBody = "Request body!")
 
-            dispatcher.saveRequest(request)
+            val request2 = request1.copy(method = "PUT")
+            val request3 = request1.copy(url = "/my-app/users/rama")
+
+            dispatcher.saveRequest(request1)
+            dispatcher.saveRequest(request2)
+            dispatcher.saveRequest(request3)
 
             val expected = StoredRequest(uuid = uuid,
                     createdDateTime = dateTime,
-                    method = request.method,
-                    url = request.url,
-                    status = request.status.code,
-                    requestHeaders = request.requestHeaders,
-                    responseHeaders = request.responseHeaders,
-                    responseBody = request.responseBody)
+                    method = request1.method,
+                    url = request1.url,
+                    status = request1.status.code,
+                    requestHeaders = request1.requestHeaders,
+                    responseHeaders = request1.responseHeaders,
+                    responseBody = request1.responseBody,
+                    requestBody = request1.requestBody)
 
             dispatcher.getRequestByUrlAndHeaders(
                     method = "GET",
@@ -54,7 +60,8 @@ class BasicRequestStoreSpec : WordSpec({
                     status = StatusCode(200),
                     requestHeaders = mapOf("X-App-Id" to "my-app", "X-Trace-Id" to "abc"),
                     responseHeaders = mapOf("Content-Type" to "text/plain"),
-                    responseBody = "Pow! Wow!")
+                    responseBody = "Pow! Wow!",
+                    requestBody = "Request body!")
 
             dispatcher.saveRequest(request)
 

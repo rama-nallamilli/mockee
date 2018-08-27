@@ -13,14 +13,15 @@ A HTTP layer mocking framework for Kotlin, inspired by Wiremock.  This library i
 val myMockedRequest =
 mock {
     get {
-        url("/my-app/users")
-        header("x-session-id", UUID.randomUuid)
-        header("x-client-id", "customer-a")
+        path("/my-app/users")
+        header("X-App-Id", "my-app")
+        stringBody("request body")
 
         response {
-            header("Content-Type", "application/json")
+            header("X-Test", "123")
+            header("X-Trace", "ABCD")
             status(200)
-            stringBody("{ LOL BODY }") | jackson(a: T) | fn(request -> {})
+            stringBody("Pow! Wow!")
         }
     }
 }

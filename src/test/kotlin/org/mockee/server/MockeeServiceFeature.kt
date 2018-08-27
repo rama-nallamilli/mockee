@@ -23,6 +23,7 @@ class MockeeServiceFeature : FeatureSpec({
                 get {
                     path("/my-app/users")
                     header(key = "X-App-Id", value = "my-app")
+                    stringBody("request body")
 
                     response {
                         header("X-Test", "123")
@@ -65,7 +66,7 @@ object MockeeApp : TestListener {
             val requestStore = BasicRequestStore(
                     genUUID = { UUID.randomUUID() },
                     genDateTime = { LocalDateTime.now() })
-            app = MockeeService(appPort, requestStore).init()
+            app = MockeeService(appPort, requestStore).start()
         } finally {
             super.beforeSpec(description, spec)
         }

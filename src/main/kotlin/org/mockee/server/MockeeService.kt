@@ -46,7 +46,7 @@ class MockeeService(private val port: Int,
         ctx.status(statusCode)
     }
 
-    fun init(): Javalin {
+    fun start(): Javalin {
 
         val app = Javalin.create().apply {
             port(port)

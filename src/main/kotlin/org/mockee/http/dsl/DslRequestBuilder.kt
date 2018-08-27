@@ -10,8 +10,9 @@ import org.mockee.http.validator.InvalidMockRequest
 class DslData(val requestMethod: RequestMethod) {
     lateinit var statusCode: StatusCode
     lateinit var path: String
+    var requestStringBody: String? = null
 
-    var stringBody: String? = null
+    var responseStringBody: String? = null
     val responseHeaders = mutableMapOf<String, String>()
     val requestHeaders = mutableMapOf<String, String>()
 }
@@ -35,6 +36,10 @@ abstract class MockedDslRequestBuilderImpl : MockedDslRequestBuilder {
         dslData.requestHeaders[key] = value
     }
 
+    fun stringBody(content: String) {
+        dslData.requestStringBody = content
+    }
+
     fun response(init: ResponseDsl.() -> Unit): ResponseDsl {
         val responseBody = ResponseDsl(dslData)
         responseBody.init()
@@ -53,7 +58,7 @@ class ResponseDsl(private val data: DslData) {
     }
 
     fun stringBody(content: String) {
-        data.stringBody = content
+        data.responseStringBody = content
     }
 
     fun status(status: Int) {
@@ -65,6 +70,20 @@ class GetDsl : MockedDslRequestBuilderImpl() {
     override val requestMethod = RequestMethod.GET
 }
 
+class PutDsl : MockedDslRequestBuilderImpl() {
+    override val requestMethod = RequestMethod.PUT
+}
+
+
+class PostDsl : MockedDslRequestBuilderImpl() {
+    override val requestMethod = RequestMethod.POST
+}
+
+
+class DeleteDsl : MockedDslRequestBuilderImpl() {
+    override val requestMethod = RequestMethod.DELETE
+}
+
 class MockDsl {
 
     lateinit var request: Either<InvalidMockRequest,MockRequest>
@@ -74,6 +93,27 @@ class MockDsl {
         get.init()
         request = get.build()
         return get
+    }
+
+    fun put(init: PutDsl.() -> Unit): PutDsl {
+        val put = PutDsl()
+        put.init()
+        request = put.build()
+        return put
+    }
+
+    fun post(init: PostDsl.() -> Unit): PostDsl {
+        val post = PostDsl()
+        post.init()
+        request = post.build()
+        return post
+    }
+
+    fun delete(init: DeleteDsl.() -> Unit): DeleteDsl {
+        val delete = DeleteDsl()
+        delete.init()
+        request = delete.build()
+        return delete
     }
 
 }

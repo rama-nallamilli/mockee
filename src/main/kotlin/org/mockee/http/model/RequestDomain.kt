@@ -16,5 +16,6 @@ data class MockRequest(val method: String,
                        val status: StatusCode,
                        val requestHeaders: Map<String, String>,
                        val responseHeaders: Map<String, String>,
-                       val responseBody: String?): Serializable
+                       val responseBody: String?,
+                       val requestBody: String? = null): Serializable
 

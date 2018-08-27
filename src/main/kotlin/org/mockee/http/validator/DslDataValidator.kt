@@ -29,7 +29,8 @@ object DslDataValidator {
                                 url = path,
                                 requestHeaders = data.requestHeaders,
                                 responseHeaders = data.responseHeaders,
-                                responseBody = data.stringBody
+                                responseBody = data.responseStringBody,
+                                requestBody = data.requestStringBody
                         ))
             }
         }

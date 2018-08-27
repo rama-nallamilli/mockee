@@ -12,7 +12,8 @@ data class StoredRequest(val uuid: UUID,
                          val status: Int,
                          val requestHeaders: Map<String, String>,
                          val responseHeaders: Map<String, String>,
-                         val responseBody: String?)
+                         val responseBody: String?,
+                         val requestBody: String?)
 
 interface RequestStore {
     fun saveRequest(request: MockRequest)
@@ -41,7 +42,9 @@ class BasicRequestStore(private val genUUID: () -> UUID,
                 status = request.status.code,
                 requestHeaders = request.requestHeaders,
                 responseHeaders = request.responseHeaders,
-                responseBody = request.responseBody)
+                responseBody = request.responseBody,
+                requestBody = request.requestBody)
+
         requestsByKey.add(toStore)
     }
 

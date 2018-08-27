@@ -16,9 +16,10 @@ class DslDataValidatorSpec : WordSpec({
             val request = DslData(RequestMethod.GET)
             request.statusCode = StatusCode(200)
             request.path = "/my-app/users"
-            request.stringBody = """ { "status" : "OK" } """
+            request.responseStringBody = """ { "status" : "OK" } """
             request.requestHeaders.put("X-Session-Id", "1234")
             request.responseHeaders.put("Content-Type", "application/json")
+            request.requestStringBody = """ { "requestType" : "ABC" } """
 
             val expected = Right<InvalidMockRequest, MockRequest>(MockRequest(
                     method = "GET",
@@ -26,7 +27,8 @@ class DslDataValidatorSpec : WordSpec({
                     status = StatusCode(200),
                     requestHeaders = mapOf("X-Session-Id" to "1234"),
                     responseHeaders = mapOf("Content-Type" to "application/json"),
-                    responseBody = """ { "status" : "OK" } """
+                    responseBody = """ { "status" : "OK" } """,
+                    requestBody = """ { "requestType" : "ABC" } """
             ))
 
             DslDataValidator.validateRequest(request) shouldBe expected
