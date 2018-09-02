@@ -1,11 +1,9 @@
-group 'mockee'
-version '1.0-SNAPSHOT'
-
 buildscript {
     ext.kotlin_version = '1.2.40'
 
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
@@ -14,9 +12,18 @@ buildscript {
     }
 }
 
+plugins {
+    id "com.jfrog.bintray" version "1.8.4"
+}
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'java'
 apply plugin: 'kotlin'
 apply plugin: 'org.junit.platform.gradle.plugin'
+
+group 'org.mockee'
+version '0.1.0'
 
 sourceCompatibility = 1.8
 
@@ -50,4 +57,34 @@ compileKotlin {
 }
 compileTestKotlin {
     kotlinOptions.jvmTarget = "1.8"
+}
+
+publishing {
+    publications {
+        MyPublication(MavenPublication) {
+            from components.java
+            groupId 'org.mockee'
+            artifactId 'mockee'
+            version '0.1.0'
+        }
+    }
+}
+
+bintray {
+    user = System.getenv('BINTRAY_USER')
+    key = System.getenv('BINTRAY_KEY')
+    publications = ['MyPublication']
+
+    pkg {
+        repo = 'mockee'
+        name = 'mockee'
+        userOrg = 'rama-nallamilli'
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/rama-nallamilli/mockee.git'
+
+        version {
+            name = '0.1.0-Final'
+            released  = new Date()
+        }
+    }
 }
